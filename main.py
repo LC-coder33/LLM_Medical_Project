@@ -1,37 +1,37 @@
 import gradio as gr
 from general_consultation import GeneralConsultation
-# 아래는 추후 구현될 다른 모듈들입니다
-# from drug_info import DrugInfo
-# from symptom_checker import SymptomChecker
-# from paper_analysis import PaperAnalysis
+from symptom_image import SymptomImageAnalysis
+from drug_search import DrugSearch
+from drug_info import DrugInfo
 
 def create_app():
     """메인 Gradio 애플리케이션 생성"""
     
     # 각 모듈 초기화
     general_consultation = GeneralConsultation()
+    symptom_image = SymptomImageAnalysis()
+    drug_search = DrugSearch()
+    drug_info = DrugInfo()
     
     # Gradio 인터페이스 생성
     with gr.Blocks() as app:
         gr.Markdown("# 의료 상담 시스템")
         
         with gr.Tabs():
-            # 일반 상담 탭
             with gr.Tab("일반 상담"):
                 general_consultation.create_interface()
             
-            # 향후 추가될 다른 탭들
-            with gr.Tab("의약품 정보"):
-                gr.Markdown("## 준비 중입니다...")
+            with gr.Tab("증상 이미지 분석"):
+                symptom_image.create_interface()
             
-            with gr.Tab(""):
-                gr.Markdown("## 준비 중입니다...")
+            with gr.Tab("약물 검색"):
+                drug_search.create_interface()
             
-            with gr.Tab(""):
-                gr.Markdown("## 준비 중입니다...")
+            with gr.Tab("약물 부작용 정보"):
+                drug_info.create_interface()
     
     return app
 
 if __name__ == "__main__":
     app = create_app()
-    app.launch()
+    app.launch(share=True)
